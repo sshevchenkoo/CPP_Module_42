@@ -125,21 +125,24 @@ Container <int, std::allocator <int> > mErGe(Container<LevelType*, std::allocato
 int main(int argc, char **argv){ 
 	std::clock_t start, vecEnd, deqEnd;
 	
-	if (argc!=2) 
+	if (argc < 2)
 		return 0;
-    std::string s = argv[1];
-	
-	       
+
 	std::vector<int> nums;
-	int num;
-	std::istringstream iss(s);
-	while ((iss >> num)) {
-		if (num < 0)
-			return (std::cout << "negative number not accepted\n", 1);
-		nums.push_back(num);}
-	if (!iss.eof()){
-		std::cerr << "Error: invalid input\n";
-		return (1);
+
+	for (int i = 1; i < argc; i++) {
+		std::istringstream iss(argv[i]);
+		int num;
+
+		if (!(iss >> num) || !iss.eof()) {
+			std::cerr << "Error: invalid input\n";
+			return 1;
+		}
+		if (num < 0) {
+			std::cout << "negative number not accepted\n";
+			return 1;
+		}
+		nums.push_back(num);
 	}
 	int s1ze = nums.size();
 
